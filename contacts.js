@@ -6,11 +6,13 @@ const contactsPath = path.resolve("db", "contacts.json");
 
 export async function listContacts() {
   return await fs
-    .readFile(contactsPath)
-    .then((data) => {
+    .readFile(contactsPath, 'utf8', (err, data) => {
+      if (err) {
+        console.log(err.message);
+        return;
+      }
       return JSON.parse(data);
     })
-    .catch((err) => console.log(err.message));
 }
 
 export async function getContactById(contactId) {
